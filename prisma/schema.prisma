@@ -1,0 +1,22 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    String @id @default(uuid())
+  name  String
+  email String @unique
+
+  // dois arrobas são configurações do model, um arroba é configuração da coluna
+  // usamos uuid para recursos que são publicamente expostos para dificultar o acesso via tentativa e erro,
+  // se não for publicamente exposto pode se utilizar o int autoincrement
+  @@map("users")
+}

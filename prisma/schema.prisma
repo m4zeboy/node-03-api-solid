@@ -8,11 +8,12 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(uuid())
+  id            String    @id @default(uuid())
   name          String
-  email         String   @unique
+  email         String    @unique
   password_hash String
-  created_at    DateTime @default(now())
+  created_at    DateTime  @default(now())
+  checkIns      CheckIn[] // camelcase
 
   // dois arrobas são configurações do model, um arroba é configuração da coluna
   // usamos uuid para recursos que são publicamente expostos para dificultar o acesso via tentativa e erro,
@@ -25,6 +26,12 @@ model CheckIn {
   created_at   DateTime  @default(now())
   validated_at DateTime?
 
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  gym    Gym    @relation(fields: [gym_id], references: [id])
+  gym_id String
+
   @@map("check_ins")
 }
 
@@ -36,6 +43,8 @@ model Gym {
 
   latitude  Decimal
   longitude Decimal
+
+  checkIns CheckIn[]
 
   @@map("gyms")
 }

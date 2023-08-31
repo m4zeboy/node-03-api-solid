@@ -29,6 +29,7 @@ export class RegisterUseCase {
       throw new UserAlreadyExistsError()
     }
 
+    // o hash é uma abordagem que só é possível "ir", não é possível voltar e descriptografar um hash.
     const password_hash = await hash(password, 6)
 
     const user = await this.usersRepository.create({

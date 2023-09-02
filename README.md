@@ -7,7 +7,7 @@ Gympass style app.
 - [x] Deve ser possível se cadastrar;
 - [x] Deve ser possível se autenticar;
 - [x] Deve ser possível obter o perfil de um usuário autenticado;
-- [ ] Deve ser possível obter o número de chec-ins realizados por um usuário autenticado;
+- [x] Deve ser possível obter o número de check-ins realizados por um usuário autenticado;
 - [ ] Deve ser possível o usuário obter o seu histórico de check-ins;
 - [ ] Deve ser possível o usuário buscar academias próximas;
 - [ ] Deve ser possível o usuário buscar academias pelo nome;
@@ -36,3 +36,12 @@ Gympass style app.
 docker run --name api-solid-pg -e POSTGRESQL_USERNAME=docker -e POSTGRESQL_PASSWORD=docker -e POSTGRESQL_DATABASE=api-solid -p 5432:5432 bitnami/postgresql
 
 começar a criação de uma funcionalidade pelo caso de uso
+
+TDD -> test driven development
+escrever os testes antes de desenvolver a funcionalidade
+recomendado para funcionalidades mais complexas como regras de negócios
+
+TDD stages
+- red: erro no teste
+- green: codar o minimo possível para o teste passar
+- refactor: 

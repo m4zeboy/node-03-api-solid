@@ -35,19 +35,21 @@ export class InMemoryGymsRepository implements GymsRepository {
   }
 
   async findManyNearby(params: FindManyNearbyParams) {
-    return this.items.filter((item) => {
-      const distance = getDistanceBetweenCoordinates(
-        {
-          latitude: params.latitude,
-          longitude: params.longitude,
-        },
-        {
-          latitude: item.latitude.toNumber(),
-          longitude: item.longitude.toNumber(),
-        },
-      )
-      console.log(distance)
-      return distance < 10
-    })
+    const DISTANCE_RADIUS_IN_KILOMETERS = 10
+    return this.items
+      .filter((item) => {
+        const distance = getDistanceBetweenCoordinates(
+          {
+            latitude: params.latitude,
+            longitude: params.longitude,
+          },
+          {
+            latitude: item.latitude.toNumber(),
+            longitude: item.longitude.toNumber(),
+          },
+        )
+        return distance < DISTANCE_RADIUS_IN_KILOMETERS
+      })
+      .slice((params.page - 1) * 20, params.page * 20)
   }
 }

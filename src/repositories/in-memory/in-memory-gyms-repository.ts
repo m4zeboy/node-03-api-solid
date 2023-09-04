@@ -5,6 +5,12 @@ import { randomUUID } from 'node:crypto'
 
 export class InMemoryGymsRepository implements GymsRepository {
   private items: Gym[] = []
+  async searchMany(query: string, page: number) {
+    return this.items
+      .filter((item) => item.title.includes(query))
+      .slice((page - 1) * 20, page * 20)
+  }
+
   async create(data: Prisma.GymCreateInput) {
     const gym = {
       id: data.id ?? randomUUID(), // usa-se assim pois se a função for chamada com um id especifico, ele vai usar esse id, se nãoa ele vai criar um novo randomUUID

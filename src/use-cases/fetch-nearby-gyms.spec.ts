@@ -36,27 +36,4 @@ describe('Fetch Nearby Gyms Use Case', () => {
     expect(nearbyGyms).toHaveLength(1)
     expect(nearbyGyms).toEqual([expect.objectContaining({ title: 'Near Gym' })])
   })
-
-  it('should be able fetch paginated nearby gyms', async () => {
-    for (let i = 1; i <= 22; i++) {
-      await gymsRepository.create({
-        title: `Near Gym ${i}`,
-        description: null,
-        phone: null,
-        latitude: -20.8726671,
-        longitude: -51.4834774,
-      })
-    }
-
-    const { nearbyGyms } = await sut.execute({
-      userLatitude: -20.8726671,
-      userLongitude: -51.4834774,
-      page: 2,
-    })
-    expect(nearbyGyms).toHaveLength(2)
-    expect(nearbyGyms).toEqual([
-      expect.objectContaining({ title: 'Near Gym 21' }),
-      expect.objectContaining({ title: 'Near Gym 22' }),
-    ])
-  })
 })

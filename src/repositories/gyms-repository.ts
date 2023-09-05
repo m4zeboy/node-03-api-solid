@@ -3,7 +3,6 @@ import { Gym, Prisma } from '@prisma/client'
 export interface FindManyNearbyParams {
   latitude: number
   longitude: number
-  page: number
 }
 
 export interface GymsRepository {

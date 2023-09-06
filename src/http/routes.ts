@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import { register } from './controllers/register'
 import { authenticate } from './controllers/authenticate'
+import { profile } from './controllers/profile'
 
 export async function appRoutes(app: FastifyInstance) {
   app.post('/users', register)
@@ -8,4 +9,6 @@ export async function appRoutes(app: FastifyInstance) {
   // post /authenticate não faz muito sentido -> 'criar um autenticar'
   // post /sessions é mais legível -> 'criar uma sessão'
   app.post('/sessions', authenticate)
+  /* AUTHENTICATED */
+  app.get('/me', profile)
 }

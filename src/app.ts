@@ -2,12 +2,15 @@ import fastify from 'fastify'
 import { appRoutes } from './http/routes'
 import { ZodError } from 'zod'
 import { env } from './env'
+import fastifyJwt from '@fastify/jwt'
 
 export const app = fastify()
 
 // SOLID
 // D - Dependency Inversion Principle
-
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+})
 app.register(appRoutes)
 
 app.setErrorHandler((error, _, reply) => {

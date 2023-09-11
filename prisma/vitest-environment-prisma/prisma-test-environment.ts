@@ -1,13 +1,37 @@
+import { PrismaClient } from '@prisma/client'
+import 'dotenv/config' // não tem como acessar as variáveis de ambiente se não importar o dotenv
+import { execSync } from 'node:child_process'
+import { randomUUID } from 'node:crypto'
 import { Environment } from 'vitest'
+// postgresql://docker:docker@localhost:5432/api-solid?schema=public
+
+function generateDatabaseURL(shcema: string) {
+  if (!process.env.DATABASE_URL) {
+    throw new Error('Please provide a DATABASE_URL environment variable.')
+  }
+
+  const url = new URL(process.env.DATABASE_URL)
+
+  url.searchParams.set('schema', shcema)
+  return url.toString()
+}
+
+const prisma = new PrismaClient()
 
 export default <Environment>{
   name: 'prisma',
   async setup() {
-    console.log('Setup')
+    const schema = randomUUID()
+    const databaseURL = generateDatabaseURL(schema)
 
+    process.env.DATABASE_URL = databaseURL
+    execSync('npx prisma migrate deploy') // usa o deploy pois ele pula a etapa de comparar com o banco de dados atual, isso torna os testes e2e mais rápidos
     return {
       async teardown() {
-        console.log('Teardown')
+        await prisma.$executeRawUnsafe(
+          `DROP SCHEMA IF EXISTS "${schema}" CASCADE`,
+        )
+        await prisma.$disconnect()
       },
     }
   },

@@ -31,7 +31,6 @@ describe('Fetch Nearby Gyms Use Case', () => {
     const { nearbyGyms } = await sut.execute({
       userLatitude: -20.8726671,
       userLongitude: -51.4834774,
-      page: 1,
     })
     expect(nearbyGyms).toHaveLength(1)
     expect(nearbyGyms).toEqual([expect.objectContaining({ title: 'Near Gym' })])

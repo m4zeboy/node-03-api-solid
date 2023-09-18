@@ -17,8 +17,8 @@ describe('Create Gym Use Case', () => {
       title: 'Mec Gym',
       description: null,
       phone: null,
-      latitude: 0,
-      longitude: 0,
+      latitude: -20.8726671,
+      longitude: -20.8726671,
     })
     expect(gym.id).toEqual(expect.any(String))
   })
